@@ -1,0 +1,7 @@
+[build]
+    functions = "functions/"
+
+[[redirects]]
+    from = "getDetails/*"
+    to= ".netlify/functions/getDetails"
+    status = 200
