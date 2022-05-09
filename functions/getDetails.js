@@ -2,11 +2,11 @@ const Axios = require("axios");
 
 //api key from environment variable on netlify server
 const key = process.env.REACT_APP_API_KEY;
-const name = "HardlyAdept";
 
 //global variables to store information for user
-let details = {}
-let masteries = {}
+let details = {};
+let masteries = {};
+let name = "";
 
 async function getSummonerDetails(summonerName) {
 
@@ -48,9 +48,11 @@ async function getSummonerMasteries(summonerId) {
 }
 
 exports.handler = async (event, context) => {
-    console.log("going to call api");
+    //retrieve name from url parameter
+    name =  event.queryStringParameters.name;
+
     // wait for async api calls to finish
-    await getSummonerDetails(name);
+    await getSummonerDetails(event.queryStringParameters.name);
     await getSummonerMasteries(details.id);
     console.log("called api");
     return {
