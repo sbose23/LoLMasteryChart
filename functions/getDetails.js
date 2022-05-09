@@ -10,7 +10,6 @@ let name = "";
 let status = "";
 let region = "";
 
-
 async function getSummonerDetails(summonerName, region) {
 
     //retrieve details for this user/summoner
@@ -29,7 +28,7 @@ async function getSummonerDetails(summonerName, region) {
             };
             details = data;
         }
-    ).catch(console.log("bad request"));
+    ).catch(e => {return;});
 }
 
 async function getSummonerMasteries(summonerId, region) {
@@ -48,7 +47,7 @@ async function getSummonerMasteries(summonerId, region) {
             }
             masteries = data;
         }
-    ).catch(console.log("bad request"));
+    ).catch(e => {return;});
 }
 
 exports.handler = async (event, context) => {
