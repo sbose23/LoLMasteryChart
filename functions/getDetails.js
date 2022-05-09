@@ -48,10 +48,11 @@ async function getSummonerMasteries(summonerId) {
 }
 
 exports.handler = async (event, context) => {
+    console.log("going to call api");
     // wait for async api calls to finish
     await getSummonerDetails(name);
     await getSummonerMasteries(details.id);
-
+    console.log("called api");
     return {
         statusCode: 200,
         body: JSON.stringify( {status : "success", details: details, masteries: masteries} )
