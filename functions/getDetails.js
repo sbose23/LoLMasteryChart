@@ -3,10 +3,11 @@ const Axios = require("axios");
 //api key from environment variable on netlify server
 const key = process.env.REACT_APP_API_KEY;
 
-//global variables to store information for user
+//global variables to store data
 let details = {};
 let masteries = {};
 let name = "";
+let status = "failure";
 
 async function getSummonerDetails(summonerName) {
 
@@ -21,11 +22,11 @@ async function getSummonerDetails(summonerName) {
                 "name" : summonerName,
                 "id" : response.data.id,
                 "level" : response.data.summonerLevel,
-                "profileId" : response.data.profileIconId
+                "profileIconId" : response.data.profileIconId
             };
             details = data;
         }
-    ).catch(err => console.error(err));
+    ).catch(err => console.log("bad request"));
 }
 
 async function getSummonerMasteries(summonerId) {
@@ -44,7 +45,7 @@ async function getSummonerMasteries(summonerId) {
             console.log(data);
             masteries = data;
         }
-    ).catch(err => console.error(err));
+    ).catch(err => console.log("bad request"));
 }
 
 exports.handler = async (event, context) => {
@@ -54,9 +55,13 @@ exports.handler = async (event, context) => {
     // wait for async api calls to finish
     await getSummonerDetails(event.queryStringParameters.name);
     await getSummonerMasteries(details.id);
-    console.log("called api");
+
+    //error handling
+    if (details.length > 0) {
+        status = "success";
+    }
     return {
         statusCode: 200,
-        body: JSON.stringify( {status : "success", details: details, masteries: masteries} )
+        body: JSON.stringify( {status : status, details: details, masteries: masteries} )
         }
 }        
