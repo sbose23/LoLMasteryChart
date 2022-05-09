@@ -5,8 +5,3 @@
     from = "getDetails/*"
     to= ".netlify/functions/getDetails"
     status = 200
-
-[[headers]]
-    for = "/*"
-        [headers.values]
-        Access-Control-Allow-Origin = "*"
