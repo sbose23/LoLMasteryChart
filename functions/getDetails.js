@@ -49,8 +49,17 @@ async function getSummonerMasteries(summonerId) {
 
 exports.handler = async (event, context) => {
     // wait for async api calls to finish
-    await getSummonerDetails(name);
-    await getSummonerMasteries(details.id);
+    try{
+        await getSummonerDetails(name);
+    } catch (err) {
+        console.error(err);
+    }
+    try{
+        await getSummonerMasteries(details.id);
+
+    } catch (err) {
+        console.error(err);
+    }
 
     return {
         statusCode: 200,
