@@ -7,12 +7,15 @@ const key = process.env.REACT_APP_API_KEY;
 let details = {};
 let masteries = {};
 let name = "";
-let status = "failure";
+let status = "";
+let region = "";
 
-async function getSummonerDetails(summonerName) {
+
+async function getSummonerDetails(summonerName, region) {
 
     //retrieve details for this user/summoner
-    const RETRIEVE_ID_URL = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/" + name +
+    const RETRIEVE_ID_URL = "https://" + region + 
+    ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + name +
     "?api_key=" + key;
 
     await Axios.get(RETRIEVE_ID_URL).then(
@@ -26,14 +29,15 @@ async function getSummonerDetails(summonerName) {
             };
             details = data;
         }
-    ).catch(err => console.log("bad request"));
+    ).catch(console.log("bad request"));
 }
 
-async function getSummonerMasteries(summonerId) {
+async function getSummonerMasteries(summonerId, region) {
 
     //retrieve champion masteries for this user/summoner
-    const RETRIEVE_CHAMP_DATA_URL = "https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"
-    +summonerId + "?api_key=" + key;
+    const RETRIEVE_CHAMP_DATA_URL = "https://" + region +
+    ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"
+    + summonerId + "?api_key=" + key;
 
     await Axios.get(RETRIEVE_CHAMP_DATA_URL).then(
         (response) => {
@@ -42,26 +46,31 @@ async function getSummonerMasteries(summonerId) {
             for (let i = 0; i < response.data.length; i++) {
                 data[response.data[i].championId] = response.data[i].championPoints;
             }
-            console.log(data);
             masteries = data;
         }
-    ).catch(err => console.log("bad request"));
+    ).catch(console.log("bad request"));
 }
 
 exports.handler = async (event, context) => {
     //retrieve name from url parameter
     name =  event.queryStringParameters.name;
+    region = event.queryStringParameters.region;
 
     // wait for async api calls to finish
-    await getSummonerDetails(event.queryStringParameters.name);
-    await getSummonerMasteries(details.id);
-
+    await getSummonerDetails(name, region);
+    
     //error handling
-    if (details.length > 0) {
-        status = "success";
+    if (details.id === undefined) {
+        status = "failure";
     }
+    else{
+        await getSummonerMasteries(details.id, region);
+        status = Object.keys(masteries).length === 0 ? "noChampData" : "success";
+    }
+
+    //return required data as json
     return {
         statusCode: 200,
-        body: JSON.stringify( {status : status, details: details, masteries: masteries} )
+        body: JSON.stringify( {result : status, details: details, masteries: masteries} )
         }
 }        
