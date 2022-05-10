@@ -4,9 +4,9 @@ Champify is a tool which makes a pie graph of a player's champion mastery in Lea
 
 # How the app was made
 
-Champify utilizes the Riot Games API. More details coming soon.
+LoLMasteryChart utilizes the Riot Games API. More details coming soon.
 
 
 # Legal:
 
-Champify isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+LoLMasteryChart isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
