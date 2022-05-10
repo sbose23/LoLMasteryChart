@@ -13,3 +13,17 @@
   font-size: calc(18px + 2vmin);
   color: rgba(255, 255, 255, 0.925);
 }
+
+a:link, a:visited{
+  
+  color:aqua;
+  text-decoration: underline;
+  font-family: 'Space Mono', monospace;
+  font-size: calc(2px + 2vmin);
+}
+
+.wrapper {
+  width: 100px;
+  height: 500px;
+  display: flex;
+}
