@@ -18,7 +18,9 @@ function App() {
       <br></br>
       <br></br>
       <a href="https://github.com/sbose23/champify"> Source Code on GitHub</a>
-      <br></br>
+      <small>Champify isn't endorsed by Riot Games and doesn't reflect the views or opinions of 
+        Riot Games or anyone officially involved in producing or managing Riot Games properties. 
+        Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</small>
     </div>
   );
 }
