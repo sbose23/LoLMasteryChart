@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+
+.App {
+  text-align: center;
+  background-color: #0a2456;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Space Mono', monospace;
+  justify-content: center;
+  font-size: calc(18px + 2vmin);
+  color: rgba(255, 255, 255, 0.925);
+}

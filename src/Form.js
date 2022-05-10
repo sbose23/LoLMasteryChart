@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
+import './styles/Form.css';
 
 let data = {};
 
-function Form() {
+function Form(props) {
 
     async function getData(name, region) {
         console.log("calling api with " + name + " and region " + region);
@@ -19,6 +20,7 @@ function Form() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        //alert if errors with input fields or api call
         if (name.length > 16 || name.length < 3) {
             alert("Invalid name. Names are 3-16 characters long.");
             return;
@@ -29,35 +31,41 @@ function Form() {
             alert("Invalid player. Please check your name and region.");
             return;
         }
+
         if (data.result === "noChampData") {
             alert("No champion data found for this player.");
             return;
         }
-        console.log("success");
-        console.log(data);
+        //use setData to update the state of data variable from App.js
+        props.setData(data);
     }
 
     return(
         <div>
             <form onSubmit={handleSubmit}>
                 <label>Player name: </label>
-                <input required type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <span>
+                <input class="name" size="40" placeholder="Example: HardlyAdept" 
+                required type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                </span>
                 <label> Region: </label>
                 <select value={region} onChange={(e) => setRegion(e.target.value)}>
-                    <option value="br1">BR1</option>
-                    <option value="eune1">EUNE1</option>
-                    <option value="euw1">EUW1</option>
-                    <option value="jp1">JP1</option>
+                    <option value="br1">BR</option>
+                    <option value="eune1">EUNE</option>
+                    <option value="euw1">EUW</option>
+                    <option value="jp1">JP</option>
                     <option value="kr">KR</option>
                     <option value="la1">LA1</option>
                     <option value="la2">LA2</option>
-                    <option value="na1">NA1</option>
-                    <option value="oc1">OC1</option>
-                    <option value="tr1">TR1</option>
-                    <option value="ru">RU</option>
+                    <option value="na1">NA</option>
+                    <option value="oc1">OC</option>
+                    <option value="tr1">TR</option>
                 </select>
                 <br></br>
-                <button>Submit</button>
+                <br></br>
+                <button>Search <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0.3 0 15 11">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg></button>
             </form>
         </div>
     );

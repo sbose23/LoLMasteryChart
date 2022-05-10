@@ -1,0 +1,58 @@
+
+select{
+    font-family: 'Space Mono', monospace;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 20px;
+    padding-left: 7px;
+    background-color: rgb(123, 142, 249);
+    background-image: linear-gradient(to right, rgb(123, 142, 249), rgb(40, 170, 196));
+    border-color: #000000;
+    border-radius: 32px;
+    outline-width: 0.01px;
+    outline-color: #05cdff;
+}
+select:hover{
+    background-image: linear-gradient(to right, rgb(40, 170, 196), rgb(123, 142, 249));
+    background-color: rgb(40, 170, 196);
+}
+
+
+input{
+    font-family: 'Space Mono', monospace;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 20px;
+    padding-left: 15px;
+    background-image: linear-gradient(to bottom, rgb(123, 142, 249), rgb(40, 170, 196));
+    width: 25em;
+    height: 2em;
+    border-color: #000000;
+    border-radius: 32px;
+    outline-color: #05cdff;
+}
+
+input:hover{
+    background-image: linear-gradient(to right, rgb(40, 170, 196), rgb(123, 142, 249));
+}
+button{
+    font-family: 'Space Mono', monospace;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 20px;
+    padding: 10px;
+    background-color: rgb(123, 142, 249);
+    border-color: #000000;
+    border-radius: 32px;
+    outline-color: #05cdff;
+    transition: 0.3s;
+    cursor: hand;
+}
+button:hover{
+    color:rgb(255, 255, 255);
+    background-color: rgb(40, 170, 196);
+}
+
+::placeholder{
+    color: rgb(255, 255, 255);
+}
