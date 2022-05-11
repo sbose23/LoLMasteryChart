@@ -5,24 +5,21 @@ import { Pie } from "react-chartjs-2";
 Chart.register(ArcElement);
 Chart.register(Tooltip);
 
-//commented out code in this file might be used in the future
-/*
+//total mastery sum for the player
 let sum = 0;
-let others = 0;
-*/
+let percentageData = {};
 
 function getChartData(masteries) {
+  
   let mastery = 0;
   let chartData = {};
+  percentageData = {};
 
-  /*reset existing data
-    sum = 0;
-    others = 0;*/
-
-  /*get total mastery points of the player
-    for (let value of Object.values(masteries)){
-        sum += value;
-    }*/
+  //sum all mastery scores, also value is reset to 0
+  sum = 0;
+  for (let value of Object.values(masteries)){
+    sum += value;
+  }
 
   //loop through each key in masteries object and add champion name: {mastery, champId} to chartData
   for (let key of Object.keys(masteries)) {
@@ -30,16 +27,14 @@ function getChartData(masteries) {
     if (champName !== undefined) {
       mastery = masteries[key];
       chartData[champName] = mastery;
-      //sum += mastery;
-      //const cutoff = sum*(0.005);
-      /*champions with mastery less than 0.5% of total mastery are added to "others"
-            if (mastery > cutoff - 50000) {
-                chartData[champName] = mastery;
-            }else{
-                others += mastery;
-            }*/
     }
   }
+
+    //create object with champion name: mastery percentage
+  for (let key of Object.keys(chartData)){
+    percentageData[key] = (chartData[key] / sum) * 100;
+  }
+
   return chartData;
 }
 
@@ -86,6 +81,7 @@ function Graph(props) {
         Champion Mastery for {name} (Account Level: {level})
       </p>
       <Pie data={data} />
+      <p>Total Mastery Score: {sum}</p>
     </div>
   );
 }
