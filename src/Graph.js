@@ -1,9 +1,7 @@
 import champData from "./jsonData/keyToChampName.json";
-//import nameToId from './jsonData/champNameToChampId.json';
 import { Chart, ArcElement, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
-Chart.register(ArcElement);
-Chart.register(Tooltip);
+Chart.register(ArcElement, Tooltip);
 
 //total mastery sum for the player
 let sum = 0;
@@ -27,14 +25,10 @@ function getChartData(masteries) {
     if (champName !== undefined) {
       mastery = masteries[key];
       chartData[champName] = mastery;
+      //percentages
+      percentageData[champName] = (mastery / sum)*100
     }
   }
-
-    //create object with champion name: mastery percentage
-  for (let key of Object.keys(chartData)){
-    percentageData[key] = (chartData[key] / sum) * 100;
-  }
-
   return chartData;
 }
 
@@ -56,6 +50,26 @@ function Graph(props) {
   const labels = Object.keys(chartData);
   const graphData = Object.values(chartData);
 
+  const options = {
+    plugins: {
+      tooltip: {
+        callbacks:{
+          
+          label: function(tooltipItem) {
+            const champName = tooltipItem.label;
+            return "  Champion: " + champName;
+          },
+          afterLabel: function(tooltipItem) {
+            return "  Mastery Score: " + tooltipItem.formattedValue;
+          },
+          afterBody: function(tooltipItem) {
+            const champPercent = (percentageData[tooltipItem[0].label]).toFixed(2);
+            return "      Percentage of Total: " + champPercent + "%";
+          }
+        }
+      }
+    }
+  }
   const data = {
     labels: labels,
     datasets: [
@@ -70,7 +84,8 @@ function Graph(props) {
           "rgba(153, 102, 255)",
           "rgba(255, 159, 64)",
         ],
-        hoverOffset: 10,
+        hoverOffset: 25,
+        hoverBorderWidth: 3,
       },
     ],
   };
@@ -80,7 +95,7 @@ function Graph(props) {
       <p>
         Champion Mastery for {name} (Account Level: {level})
       </p>
-      <Pie data={data} />
+      <Pie data={data} options={options}/>
       <p>Total Mastery Score: {sum}</p>
     </div>
   );
