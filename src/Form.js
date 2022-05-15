@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import "./styles/Form.css";
+import SampleQueries from "./SampleQueries";
 
 let data = {};
 
@@ -24,7 +25,7 @@ function Form(props) {
 
   const [name, setName] = useState("");
   const [region, setRegion] = useState("na1");
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     //alert if errors with input fields or api call
@@ -49,13 +50,14 @@ function Form(props) {
 
   return (
     <div>
+      <SampleQueries setName={setName} setRegion={setRegion} />
       <form onSubmit={handleSubmit}>
         <label>Player name: </label>
         <span>
           <input
             class="name"
             size="40"
-            placeholder="Example: HardlyAdept"
+            placeholder= "Enter player in-game name..."
             required
             type="text"
             value={name}
@@ -77,7 +79,7 @@ function Form(props) {
         </select>
         <br></br>
         <br></br>
-        <button>
+        <button class = "submit">
           Search{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"

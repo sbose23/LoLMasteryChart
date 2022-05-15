@@ -11,12 +11,12 @@ select{
     border-radius: 32px;
     outline-width: 0.01px;
     outline-color: #05cdff;
+    cursor: pointer;
 }
 select:hover{
     background-image: linear-gradient(to right, rgb(40, 170, 196), rgb(123, 142, 249));
     background-color: rgb(40, 170, 196);
 }
-
 
 input{
     font-family: 'Space Mono', monospace;
@@ -35,7 +35,7 @@ input{
 input:hover{
     background-image: linear-gradient(to right, rgb(40, 170, 196), rgb(123, 142, 249));
 }
-button{
+.submit {
     font-family: 'Space Mono', monospace;
     color: rgb(255, 255, 255);
     font-weight: 500;
@@ -46,9 +46,9 @@ button{
     border-radius: 32px;
     outline-color: #05cdff;
     transition: 0.3s;
-    cursor: hand;
+    cursor: pointer;
 }
-button:hover{
+.submit:hover{
     color:rgb(255, 255, 255);
     background-color: rgb(40, 170, 196);
 }

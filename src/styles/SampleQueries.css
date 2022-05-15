@@ -1,0 +1,24 @@
+.button-group button{
+    font-family: 'Space Mono', monospace;
+    color: rgb(255, 255, 255);
+    font-size: 13px;
+    padding: 10px;
+    background-color: rgb(123, 142, 249);
+    border-color: #000000;
+    border-radius: 5px;
+    outline-color: #05cdff;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.button-group button:hover{
+    color:rgb(255, 255, 255);
+    background-color: rgb(40, 170, 196);
+}
+
+span{
+    font-size: 50%;
+}
+
+.button-group-center{
+    text-align: center;
+}
