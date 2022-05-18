@@ -4,6 +4,9 @@ import "./styles/Form.css";
 import SampleQueries from "./SampleQueries";
 
 let data = {};
+const invalidKey = "Sorry, this project is still awaiting a permanent API key." +
+                    " The temporary key needs to be regenerated every 24 hours. " +
+                    "The key in use has expired.";
 
 function Form(props) {
   async function getData(name, region) {
@@ -12,7 +15,7 @@ function Form(props) {
       process.env.REACT_APP_API_LOCATION +
         "?name=" +
         name +
-        "&&region=" +
+        "&region=" +
         region
     )
       .then((response) => {
@@ -37,6 +40,16 @@ function Form(props) {
     await getData(name, region);
     if (data.result === "failure" || data.result === "noChampData") {
       alert("Invalid player. Please check your name and region.");
+      return;
+    }
+
+    if (data.result === "invalidKey") {
+      alert(invalidKey);
+      return;
+    }
+
+    if (data.result === "internalError") {
+      alert("Riot games server error. Please try again later.");
       return;
     }
 

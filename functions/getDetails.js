@@ -7,7 +7,7 @@ const key = process.env.REACT_APP_API_KEY;
 let details = {};
 let masteries = {};
 let name = "";
-let status = "";
+let status = "success";
 let region = "";
 
 async function getSummonerDetails(summonerName, region) {
@@ -19,6 +19,7 @@ async function getSummonerDetails(summonerName, region) {
 
     await Axios.get(RETRIEVE_ID_URL).then(
         response => {
+            
             //extract select data from response
             const data = {
                 "name" : summonerName,
@@ -26,9 +27,23 @@ async function getSummonerDetails(summonerName, region) {
                 "level" : response.data.summonerLevel,
                 "profileIconId" : response.data.profileIconId
             };
+            
             details = data;
         }
-    ).catch(e => {return;});
+    ).catch(e => {
+        //error handling
+        let responseStatus = e.response.status;
+        if (responseStatus === 404) {
+            status = "failure";
+        }
+        else if (responseStatus === 403) {
+            status = "invalidKey";
+        }
+        else if(responseStatus === 500 || responseStatus === 503) {
+            status = "internalError";
+        }
+        return;
+    });
 }
 
 async function getSummonerMasteries(summonerId, region) {
@@ -57,16 +72,10 @@ exports.handler = async (event, context) => {
 
     // wait for async api calls to finish
     await getSummonerDetails(name, region);
-    
-    //error handling
-    if (details.id === undefined) {
-        status = "failure";
-    }
-    else{
+    if (status === "success") {
         await getSummonerMasteries(details.id, region);
         status = Object.keys(masteries).length === 0 ? "noChampData" : "success";
     }
-
     //return required data as json
     return {
         statusCode: 200,
