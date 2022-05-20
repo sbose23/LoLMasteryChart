@@ -7,7 +7,7 @@ const key = process.env.REACT_APP_API_KEY;
 let details = {};
 let masteries = {};
 let name = "";
-let status = "success";
+let status = "";
 let region = "";
 
 async function getSummonerDetails(summonerName, region) {
@@ -27,22 +27,29 @@ async function getSummonerDetails(summonerName, region) {
                 "level" : response.data.summonerLevel,
                 "profileIconId" : response.data.profileIconId
             };
-            
+
             details = data;
         }
     ).catch(e => {
         //error handling
         let responseStatus = e.response.status;
-        if (responseStatus === 404) {
-            status = "failure";
+
+        switch(responseStatus) {
+            case 404:
+                status = "failure";
+                return;
+
+            case 403:
+                status = "invalidKey";
+                return;
+            
+            case 500 || 503:
+                status = "internalError";
+                return;
+            
+            default:
+                return;
         }
-        else if (responseStatus === 403) {
-            status = "invalidKey";
-        }
-        else if(responseStatus === 500 || responseStatus === 503) {
-            status = "internalError";
-        }
-        return;
     });
 }
 
@@ -66,16 +73,20 @@ async function getSummonerMasteries(summonerId, region) {
 }
 
 exports.handler = async (event, context) => {
+
     //retrieve name from url parameter
     name =  event.queryStringParameters.name;
     region = event.queryStringParameters.region;
 
     // wait for async api calls to finish
     await getSummonerDetails(name, region);
-    if (status === "success") {
+
+    //if user exists, get masteries
+    if (details.id) {
         await getSummonerMasteries(details.id, region);
         status = Object.keys(masteries).length === 0 ? "noChampData" : "success";
     }
+
     //return required data as json
     return {
         statusCode: 200,
