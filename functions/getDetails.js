@@ -27,7 +27,7 @@ async function getSummonerDetails(summonerName, region) {
                 "level" : response.data.summonerLevel,
                 "profileIconId" : response.data.profileIconId
             };
-
+            status = "userFound";
             details = data;
         }
     ).catch(e => {
@@ -82,7 +82,7 @@ exports.handler = async (event, context) => {
     await getSummonerDetails(name, region);
 
     //if user exists, get masteries
-    if (details.id) {
+    if (status === "userFound") {
         await getSummonerMasteries(details.id, region);
         status = Object.keys(masteries).length === 0 ? "noChampData" : "success";
     }
