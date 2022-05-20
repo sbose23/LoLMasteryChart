@@ -31,6 +31,7 @@ function Form(props) {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     //alert if errors with input fields or api call
     if (name.length > 16 || name.length < 3) {
       alert("Invalid name. Names are 3-16 characters long.");
@@ -38,25 +39,28 @@ function Form(props) {
     }
 
     await getData(name, region);
-    if (data.result === "failure" || data.result === "noChampData") {
-      alert("Invalid player. Please check your name and region.");
-      return;
+
+    switch(data.result) {
+      case "failure" || "noChampData":
+        alert("Invalid player. Please check your name and region.");
+        return;
+      
+      case "invalidKey":
+        alert(invalidKey);
+        return;
+      
+      case "internalError":
+        alert("Riot games server error. Please try again later.");
+        return;
+    
+      case "noChampdata":
+        alert("No champion data found for this player.");
+        return;
+      
+        default:
+          break;
     }
 
-    if (data.result === "invalidKey") {
-      alert(invalidKey);
-      return;
-    }
-
-    if (data.result === "internalError") {
-      alert("Riot games server error. Please try again later.");
-      return;
-    }
-
-    if (data.result === "noChampData") {
-      alert("No champion data found for this player.");
-      return;
-    }
     //use setData to update the state of data variable from App.js
     props.setData(data);
   };
