@@ -8,9 +8,22 @@ const invalidKey = "Sorry, this project is still awaiting a permanent API key." 
                     " The temporary key needs to be regenerated every 24 hours. " +
                     "The key in use has expired.";
 
+//keep track of last query
+let lastQuery = {"name": "", "region": ""};
+
 function Form(props) {
+
+  //button variable to prevent spam button clicks before the first request is processed
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   async function getData(name, region) {
-    console.log("calling api with " + name + " and region " + region);
+
+    //if duplicate query, do not make a new api call
+    if (name === lastQuery.name && region === lastQuery.region) {
+      return;
+    }
+
+    console.log("Calling API with Name: " + name + " and Region: " + region);
     await Axios.get(
       process.env.REACT_APP_API_LOCATION +
         "?name=" +
@@ -19,6 +32,12 @@ function Form(props) {
         region
     )
       .then((response) => {
+        
+        //save this successful query
+        lastQuery.name = name;
+        lastQuery.region = region;
+
+        //save the response data
         data = response.data;
       })
       .catch((error) => {
@@ -31,16 +50,21 @@ function Form(props) {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     //alert if errors with input fields or api call
     if (name.length > 16 || name.length < 3) {
       alert("Invalid name. Names are 3-16 characters long.");
       return;
     }
 
+    //call api and disable submit button while waiting for response (somewhat like a mutex)
+    setButtonDisabled(true);
     await getData(name, region);
+    setButtonDisabled(false);
 
     switch(data.result) {
+
+      //handle api error cases
       case "failure" || "noChampData":
         alert("Invalid player. Please check your name and region.");
         return;
@@ -96,7 +120,7 @@ function Form(props) {
         </select>
         <br></br>
         <br></br>
-        <button class = "submit">
+        <button class = "submit" disabled={buttonDisabled}>
           Search{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
