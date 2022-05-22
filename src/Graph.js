@@ -1,6 +1,7 @@
 import champData from "./jsonData/keyToChampName.json";
 import { Chart, ArcElement, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import "./styles/Graph.css";
 Chart.register(ArcElement, Tooltip);
 
 //total mastery sum for the player
@@ -51,10 +52,12 @@ function Graph(props) {
   const graphData = Object.values(chartData);
 
   const options = {
+    layout : {
+      padding:  15
+      },
     plugins: {
       tooltip: {
         callbacks:{
-          
           label: function(tooltipItem) {
             const champName = tooltipItem.label;
             return "  Champion: " + champName;
@@ -91,12 +94,13 @@ function Graph(props) {
   };
 
   return (
-    <div>
-      <p>
-        Champion Mastery for {name} (Account Level: {level})
+    <div class="chart">
+      <p style={{"font-size": "70%"}}>
+        Champion Mastery for: <span style={{"color": "#05cdff", "font-size": "120%"}}>{name}</span>
+        <br></br>Account Level: <span style={{"color": "#05cdff", "font-size": "120%"}}>{level}</span>
+        <br></br> Total Mastery Score: <span style={{"color": "#05cdff", "font-size": "120%"}}>{sum.toLocaleString()}</span>
       </p>
       <Pie data={data} options={options}/>
-      <p>Total Mastery Score: {sum}</p>
     </div>
   );
 }
