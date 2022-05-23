@@ -1,6 +1,7 @@
 import champData from "./jsonData/keyToChampName.json";
 import { Chart, ArcElement, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import React, { useEffect, useRef } from "react";
 import "./styles/Graph.css";
 Chart.register(ArcElement, Tooltip);
 
@@ -34,6 +35,17 @@ function getChartData(masteries) {
 }
 
 function Graph(props) {
+
+  //reference graph
+  const graphRef =  useRef(null);
+
+  //if graph is not null, scroll to the graph
+  useEffect(() => {
+    if (graphRef.current !== null) {
+      graphRef.current.scrollIntoView({ behavior: "smooth" })
+    };
+  });
+
   //if no data, do not show this graph component
   if (props.data.result === undefined) {
     return null;
@@ -94,7 +106,7 @@ function Graph(props) {
   };
 
   return (
-    <div class="chart">
+    <div ref={graphRef} class="chart">
       <p style={{"font-size": "70%"}}>
         Champion Mastery for: <span style={{"color": "#05cdff", "font-size": "120%"}}>{name}</span>
         <br></br>Account Level: <span style={{"color": "#05cdff", "font-size": "120%"}}>{level}</span>
