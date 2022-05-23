@@ -23,12 +23,11 @@ function getChartData(masteries) {
 
   //loop through each key in masteries object and add champion name: {mastery, champId} to chartData
   for (let key of Object.keys(masteries)) {
-    const champName = champData[key];
-    if (champName !== undefined) {
+    if (champData[key] !== undefined) {
       mastery = masteries[key];
-      chartData[champName] = mastery;
+      chartData[champData[key]] = mastery;
       //percentages
-      percentageData[champName] = (mastery / sum)*100
+      percentageData[champData[key]] = (mastery / sum)*100
     }
   }
   return chartData;
@@ -52,17 +51,7 @@ function Graph(props) {
   }
 
   //get data from props data object
-  const masteries = props.data.masteries;
-  const chartData = getChartData(masteries);
-
-  //additional data
-  const level = props.data.details.level;
-  const name = props.data.details.name;
-
-  //arrays to hold labels and data
-  const labels = Object.keys(chartData);
-  const graphData = Object.values(chartData);
-
+  const allChartData = getChartData(props.data.masteries);
   const options = {
     layout : {
       padding:  15
@@ -86,11 +75,11 @@ function Graph(props) {
     }
   }
   const data = {
-    labels: labels,
+    labels: Object.keys(allChartData),
     datasets: [
       {
         label: "Champion Mastery",
-        data: graphData,
+        data: Object.values(allChartData),
         backgroundColor: [
           "rgba(255, 99, 132)",
           "rgba(54, 162, 235)",
@@ -108,8 +97,8 @@ function Graph(props) {
   return (
     <div ref={graphRef} class="chart">
       <p style={{"font-size": "70%"}}>
-        Champion Mastery for: <span style={{"color": "#05cdff", "font-size": "120%"}}>{name}</span>
-        <br></br>Account Level: <span style={{"color": "#05cdff", "font-size": "120%"}}>{level}</span>
+        Champion Mastery for: <span style={{"color": "#05cdff", "font-size": "120%"}}>{props.data.details.name}</span>
+        <br></br>Account Level: <span style={{"color": "#05cdff", "font-size": "120%"}}>{props.data.details.level}</span>
         <br></br> Total Mastery Score: <span style={{"color": "#05cdff", "font-size": "120%"}}>{sum.toLocaleString()}</span>
       </p>
       <Pie data={data} options={options}/>
