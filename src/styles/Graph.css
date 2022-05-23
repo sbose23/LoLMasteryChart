@@ -1,6 +1,36 @@
-.chart{
+.graph-container {
+    display: flex;
+    width: 80%;
+}
+
+.chart {
     position: relative;
-    margin:auto;
-    width: 50%;
-    height: 50%;
+    margin: auto;
+    flex: 3;
+    padding-left: 10%;
+}
+
+.filter {
+    position: relative;
+    flex: 1;
+}
+
+input[type=checkbox] {
+    position: relative;
+    margin: 10%;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type=checkbox]:checked+label {
+    color: #05cdff;
+}
+
+label {
+    vertical-align: middle;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
 }
