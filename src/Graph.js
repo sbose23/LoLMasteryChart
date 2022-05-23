@@ -63,14 +63,21 @@ function Graph(props) {
       graphRef.current.scrollIntoView({ behavior: "smooth" });
     }
   });
-
+  
   //if no data, do not show this graph component
   if (props.data.result === undefined) {
     return null;
   }
 
+  //total sum irrespective of filter
+  let absoluteSum = 0;
+  Object.values(props.data.masteries).forEach((mastery) => {absoluteSum += mastery});
+
   //get data from props data object
   const chartData = getChartData(props.data.masteries, filter);
+
+  //get percentage of total mastery score
+  let percentOfTotal = ( sum / absoluteSum) * 100;
 
   const options = {
     layout: {
@@ -134,7 +141,7 @@ function Graph(props) {
             </span>
             <br></br> Total Mastery Score:{" "}
             <span style={{ color: "#05cdff", "font-size": "120%" }}>
-              {sum.toLocaleString()}
+              {sum.toLocaleString()} ({percentOfTotal.toFixed(0)}% of Total)
             </span>
           </p>
           <Pie data={data} options={options} />
