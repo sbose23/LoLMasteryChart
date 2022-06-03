@@ -73,6 +73,11 @@ async function getSummonerMasteries(summonerId, region) {
 }
 
 exports.handler = async (event, context) => {
+    
+    //if the request is not directly from app, decline request
+    if (event.headers["referer"] !== "https://lolmasterychart.netlify.app/") {
+        return { statusCode: 400, body: "You should not be doing this. Please make a request from the application :)" };
+    }
 
     //retrieve name from url parameter
     name =  event.queryStringParameters.name;
