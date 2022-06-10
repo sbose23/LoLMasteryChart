@@ -10,6 +10,8 @@ LolMasteryChart is a tool which makes a pie chart of a player's champion mastery
 
 This website is quite simple to use. A user has to specify a player name and the region that player belongs to. After pressing "Search", if the player exists and has available champion data, the user will see a chart of that players mastery scores. Otherwise, the user is alerted to an error. The user may search again in either case.
 
+Additionally, a user is able to filter the data by champion class (type) which provides an updated chart view with each selection(s).
+
 
 # Behind the scenes
 
