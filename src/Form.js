@@ -4,9 +4,6 @@ import "./styles/Form.css";
 import SampleQueries from "./SampleQueries";
 
 let data = {};
-const invalidKey = "Sorry, this project is still awaiting a permanent API key." +
-                    " The temporary key needs to be regenerated every 24 hours. " +
-                    "The key in use has expired.";
 
 //keep track of last query
 let lastQuery = {"name": "", "region": ""};
@@ -70,7 +67,7 @@ function Form(props) {
         return;
       
       case "invalidKey":
-        alert(invalidKey);
+        alert("API Key Error");
         return;
       
       case "internalError":
