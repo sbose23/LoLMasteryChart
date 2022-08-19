@@ -87,7 +87,7 @@ function Form(props) {
   };
 
   return (
-    <div>
+    <div style={{cursor: buttonDisabled ? 'wait' : ''}}>
       <SampleQueries setName={setName} setRegion={setRegion} />
       <form onSubmit={handleSubmit}>
         <label>Player name: </label>
@@ -117,7 +117,7 @@ function Form(props) {
         </select>
         <br></br>
         <br></br>
-        <button class = "submit" disabled={buttonDisabled}>
+        <button class = "submit" disabled={buttonDisabled} style={{cursor: buttonDisabled ? 'wait' : ''}}>
           Search{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
