@@ -87,7 +87,7 @@ function Form(props) {
   };
 
   return (
-    <div style={{cursor: buttonDisabled ? 'wait' : ''}}>
+    <div style={{cursor: buttonDisabled ? 'progress' : ''}}>
       <SampleQueries setName={setName} setRegion={setRegion} />
       <form onSubmit={handleSubmit}>
         <label>Player name: </label>
