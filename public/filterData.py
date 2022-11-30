@@ -10,7 +10,7 @@ from urllib.request import urlopen
 keyToChampName = {}
 champClassData = {"Fighter": [], "Tank": [], "Mage": [], "Assassin": [], "Marksman": [], "Support": []}
 
-with urlopen("https://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/champion.json") as response:
+with urlopen("https://ddragon.leagueoflegends.com/cdn/12.22.1/data/en_US/champion.json") as response:
   data = json.loads(response.read())
   for obj in data["data"]:
     champion = data["data"][obj]
