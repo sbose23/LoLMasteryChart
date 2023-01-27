@@ -32,6 +32,11 @@ async function getSummonerDetails(summonerName, region) {
         }
     ).catch(e => {
         //error handling
+        console.log(e.response);
+        if (e.response.status === undefined) {
+            status = "internalError";
+            return;
+        }
         let responseStatus = e.response.status;
 
         switch(responseStatus) {
