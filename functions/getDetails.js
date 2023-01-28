@@ -34,7 +34,7 @@ async function getSummonerDetails(summonerName, region) {
         //error handling
         if (e.response === undefined) {
             console.log("Undefined response");
-            status = "internalError";
+            status = "failure";
             return;
         }
         let responseStatus = e.response.status;
@@ -95,6 +95,7 @@ exports.handler = async (event, context) => {
     if (status === "userFound") {
         await getSummonerMasteries(details.id, region);
         status = Object.keys(masteries).length === 0 ? "noChampData" : "success";
+        console.log("Status: " + status);
     }
 
     //return required data as json
