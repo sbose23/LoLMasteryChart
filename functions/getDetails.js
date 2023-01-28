@@ -16,7 +16,7 @@ async function getSummonerDetails(summonerName, region) {
     const RETRIEVE_ID_URL = "https://" + region + 
     ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + name +
     "?api_key=" + key;
-
+    console.log("Region: " + region + " Name: " + name);
     await Axios.get(RETRIEVE_ID_URL).then(
         response => {
             
@@ -32,8 +32,8 @@ async function getSummonerDetails(summonerName, region) {
         }
     ).catch(e => {
         //error handling
-        console.log(e.response);
-        if (e.response.status === undefined) {
+        if (e.response === undefined) {
+            console.log("Undefined response");
             status = "internalError";
             return;
         }
