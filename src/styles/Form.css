@@ -3,8 +3,8 @@ select{
     font-family: 'Space Mono', monospace;
     color: rgb(255, 255, 255);
     font-weight: 500;
-    font-size: 20px;
-    padding-left: 7px;
+    font-size: 15px;
+    padding-left: 5px;
     background-color: rgb(123, 142, 249);
     background-image: linear-gradient(to right, rgb(123, 142, 249), rgb(40, 170, 196));
     border-color: #000000;

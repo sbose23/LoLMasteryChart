@@ -105,7 +105,7 @@ function Form(props) {
         <label> Region: </label>
         <select value={region} onChange={(e) => setRegion(e.target.value)}>
           <option value="br1">BR</option>
-          <option value="eune1">EUNE</option>
+          <option value="eun1">EUNE</option>
           <option value="euw1">EUW</option>
           <option value="jp1">JP</option>
           <option value="kr">KR</option>
@@ -114,6 +114,12 @@ function Form(props) {
           <option value="na1">NA</option>
           <option value="oc1">OC</option>
           <option value="tr1">TR</option>
+          <option value="ru">RU</option>
+          <option value="ph2">PH2</option>
+          <option value="sg2">SG2</option>
+          <option value="th2">TH2</option>
+          <option value="tw2">TW2</option>
+          <option value="vn2">VN2</option>
         </select>
         <br></br>
         <br></br>
