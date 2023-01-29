@@ -14,7 +14,7 @@ async function getSummonerDetails(summonerName, region) {
 
     //retrieve details for this user/summoner
     const RETRIEVE_ID_URL = "https://" + region + 
-    ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + name +
+    ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + encodeURIComponent(name) +
     "?api_key=" + key;
     console.log("Region: " + region + " Name: " + name);
     await Axios.get(RETRIEVE_ID_URL).then(
