@@ -58,12 +58,12 @@ async function getSummonerDetails(summonerName, region) {
     });
 }
 
-async function getSummonerMasteries(summonerId, region) {
+async function getSummonerMasteries(summonerPuuid, region) {
 
     //retrieve champion masteries for this user/summoner
     const RETRIEVE_CHAMP_DATA_URL = "https://" + region +
-    ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"
-    + summonerId + "?api_key=" + key;
+    ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/"
+    + summonerPuuid + "?api_key=" + key;
 
     await Axios.get(RETRIEVE_CHAMP_DATA_URL).then(
         (response) => {
@@ -93,7 +93,7 @@ exports.handler = async (event, context) => {
 
     //if user exists, get masteries
     if (status === "userFound") {
-        await getSummonerMasteries(details.id, region);
+        await getSummonerMasteries(details.puuid, region);
         status = Object.keys(masteries).length === 0 ? "noChampData" : "success";
         console.log("Status: " + status);
     }
