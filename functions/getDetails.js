@@ -23,7 +23,7 @@ async function getSummonerDetails(summonerName, region) {
             //extract select data from response
             const data = {
                 "name" : summonerName,
-                "id" : response.data.id,
+                "puuid" : response.data.puuid,
                 "level" : response.data.summonerLevel,
                 "profileIconId" : response.data.profileIconId
             };
